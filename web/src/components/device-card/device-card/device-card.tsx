@@ -57,6 +57,14 @@ export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
     this.props.reloadDevices();
   }
 
+  viewDevice(host: string, devicePort?: number) {
+    if (devicePort) {
+      const port = host.split(':')[2];
+      const newHost = port ? host.replace(port, devicePort.toString()) : host + ':' + devicePort;
+      window.open(newHost, '_blank');
+    }
+  }
+
   render() {
     const {
       name,
@@ -70,6 +78,8 @@ export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
       totalUtilizationTimeMilliSec,
       userBlocked,
       busy,
+      mjpegServerPort,
+      adbPort,
     } = this.props.device;
 
     const deviceState = this.getDeviceState();
@@ -124,6 +134,14 @@ export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
               onClick={() => this.blockDevice(sdk, platform, udid, deviceState)}
             >
               Block Device
+            </button>
+          )}
+          {busy && !userBlocked && (
+            <button
+              className="device-info-card__body_view-device"
+              onClick={() => this.viewDevice(host, mjpegServerPort || adbPort)}
+            >
+              View Device
             </button>
           )}
         </div>

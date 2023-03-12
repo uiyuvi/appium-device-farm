@@ -12,4 +12,6 @@ export interface IDevice {
   dashboard_link?: string;
   total_session_count?: number;
   totalUtilizationTimeMilliSec?: any;
+  mjpegServerPort?: number;
+  adbPort?: number;
 }
