@@ -1,7 +1,7 @@
 import React from 'react';
 import { IDevice } from '../../../interfaces/IDevice';
 import DeviceCard from '../../device-card/device-card/device-card';
-import DeviceStreamPopup from '../../device-card/device-card/device-stream-popup';
+import DeviceStreamPopup from '../../device-popup/device-stream-popup';
 import './card-view.css';
 
 interface IProps {
@@ -15,33 +15,24 @@ export default class CardView extends React.Component<IProps, any> {
     this.state = {
       streamingDevice: {
         isVisible: false,
-        streamUrl: undefined,
-        deviceName: undefined,
+        devices: [],
       },
     };
   }
 
-  streamingDevice = (device?: IDevice) => {
+  streamDevice = (device?: IDevice) => {
     if (device) {
-      const devicePort = device.adbPort || device.mjpegServerPort || 0;
-      const portInHost = device.host.split(':')[2];
-      const newHost = portInHost
-        ? device.host.replace(portInHost, devicePort.toString())
-        : device.host + ':' + devicePort;
-
       this.setState({
         streamingDevice: {
           isVisible: true,
-          streamUrl: newHost,
-          deviceName: device.name,
+          devices: [device],
         },
       });
     } else {
       this.setState({
         streamingDevice: {
           isVisible: false,
-          streamUrl: undefined,
-          deviceName: undefined,
+          devices: [],
         },
       });
     }
@@ -56,12 +47,17 @@ export default class CardView extends React.Component<IProps, any> {
               <DeviceCard
                 device={device}
                 reloadDevices={this.props.reloadDevices}
-                streamDevice={this.streamingDevice}
+                streamDevice={this.streamDevice}
               />
             ))
           )}
         </div>
-        <DeviceStreamPopup {...this.state.streamingDevice} onClose={() => this.streamingDevice()} />
+        {this.state.streamingDevice.isVisible && (
+          <DeviceStreamPopup
+            devices={this.state.streamingDevice.devices}
+            onClose={() => this.streamDevice()}
+          />
+        )}
       </>
     );
   }
