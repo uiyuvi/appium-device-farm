@@ -20,8 +20,9 @@ This is an Appium plugin designed to manage and create driver session on connect
 - Dynamically allocates a free device from device pool while creating driver session.
 - Updates the device pool with a new device during test execution.
 - Allocates random ports for parallel execution.
-- Remote execution
+- Remote execution.
 - Asyc lockup for device changes.
+- View device on browser on running test.
 
 ## Device UI
 
@@ -32,6 +33,8 @@ This is an Appium plugin designed to manage and create driver session on connect
 User can block/unblock devices from Dashboard manually. These devices will not be picked up for automation. 
 
 Once automation picks the device user cannot manually unblock, its responsbile of the automation script. 
+
+While running tests, the user can view the device in the browser.
 
 ## Prerequisite
 
