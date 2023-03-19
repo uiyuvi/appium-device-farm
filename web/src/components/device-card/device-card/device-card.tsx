@@ -10,6 +10,7 @@ import DeviceFarmApiService from '../../../api-service';
 interface IDeviceCardProps {
   device: IDevice;
   reloadDevices: () => void;
+  streamDevice: (device?: IDevice) => void;
 }
 
 export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
@@ -55,14 +56,6 @@ export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
     );
 
     this.props.reloadDevices();
-  }
-
-  viewDevice(host: string, devicePort?: number) {
-    if (devicePort) {
-      const port = host.split(':')[2];
-      const newHost = port ? host.replace(port, devicePort.toString()) : host + ':' + devicePort;
-      window.open(newHost, '_blank');
-    }
   }
 
   render() {
@@ -139,7 +132,7 @@ export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
           {busy && !userBlocked && (
             <button
               className="device-info-card__body_view-device"
-              onClick={() => this.viewDevice(host, mjpegServerPort || adbPort)}
+              onClick={() => this.props.streamDevice(this.props.device)}
             >
               View Device
             </button>
