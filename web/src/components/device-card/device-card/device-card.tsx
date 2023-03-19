@@ -10,7 +10,7 @@ import DeviceFarmApiService from '../../../api-service';
 interface IDeviceCardProps {
   device: IDevice;
   reloadDevices: () => void;
-  streamDevice: (device?: IDevice) => void;
+  streamDevice: (device: IDevice) => void;
 }
 
 export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
@@ -71,8 +71,6 @@ export default class DeviceCard extends React.Component<IDeviceCardProps, any> {
       totalUtilizationTimeMilliSec,
       userBlocked,
       busy,
-      mjpegServerPort,
-      adbPort,
     } = this.props.device;
 
     const deviceState = this.getDeviceState();

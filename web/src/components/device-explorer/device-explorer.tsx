@@ -6,12 +6,15 @@ import './device-explorer.css';
 import DeviceFarmApiService from '../../api-service';
 import { IDeviceFilter } from '../../interfaces/IDeviceFilter';
 import { IDevice } from '../../interfaces/IDevice';
+import DeviceStreamPopup from '../device-popup/device-stream-popup';
 
 interface IDeviceExplorerState {
   filter: IDeviceFilter;
   devices: IDevice[];
   activeSessionsCount: number;
   pendingSessionsCount: number;
+  isStreamingPopupVisible: boolean;
+  activeStreamingDevice?: IDevice;
 }
 const DEFAULT_FILTER: IDeviceFilter = {
   platform: {
@@ -36,6 +39,8 @@ export default class DeviceExplorer extends React.Component<any, IDeviceExplorer
       activeSessionsCount: 0,
       pendingSessionsCount: 0,
       filter: DEFAULT_FILTER,
+      isStreamingPopupVisible: false,
+      activeStreamingDevice: undefined,
     };
   }
 
@@ -52,6 +57,24 @@ export default class DeviceExplorer extends React.Component<any, IDeviceExplorer
       this.devicePolling = undefined;
     }
   }
+
+  streamDevice = (device: IDevice) => {
+    console.log(device.name);
+
+    this.setState({
+      ...this.state,
+      isStreamingPopupVisible: true,
+      activeStreamingDevice: device,
+    });
+  };
+
+  toggleStream = () => {
+    this.setState({
+      ...this.state,
+      isStreamingPopupVisible: !this.state.isStreamingPopupVisible,
+      activeStreamingDevice: undefined,
+    });
+  };
 
   getBusyDevicesCount(devices: Array<IDevice>) {
     const filters = [(d: IDevice) => d.busy];
@@ -224,6 +247,9 @@ export default class DeviceExplorer extends React.Component<any, IDeviceExplorer
             </div>
           </div>
           <div className="device-explorer-header-right-container">
+            <div>
+              <button onClick={this.toggleStream}>View All</button>
+            </div>
             <div className="device-explorer-header-filter-count">
               <span>{this.state.activeSessionsCount}</span>
               Active session{this.state.activeSessionsCount > 1 ? 's' : ''}
@@ -234,7 +260,18 @@ export default class DeviceExplorer extends React.Component<any, IDeviceExplorer
             </div>
           </div>
         </div>
-        <CardView devices={devices} reloadDevices={() => this.fetchDevices()} />
+        <CardView
+          devices={devices}
+          streamDevice={this.streamDevice}
+          reloadDevices={this.fetchDevices}
+        />
+        {this.state.isStreamingPopupVisible && (
+          <DeviceStreamPopup
+            activeStreamingDevice={this.state.activeStreamingDevice}
+            devices={devices}
+            onClose={this.toggleStream}
+          />
+        )}
       </div>
     );
   }

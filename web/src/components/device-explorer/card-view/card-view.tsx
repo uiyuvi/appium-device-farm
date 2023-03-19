@@ -1,43 +1,15 @@
 import React from 'react';
 import { IDevice } from '../../../interfaces/IDevice';
 import DeviceCard from '../../device-card/device-card/device-card';
-import DeviceStreamPopup from '../../device-popup/device-stream-popup';
 import './card-view.css';
 
 interface IProps {
   devices: Array<IDevice>;
+  streamDevice: (device: IDevice) => void;
   reloadDevices: () => void;
 }
 
 export default class CardView extends React.Component<IProps, any> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      streamingDevice: {
-        isVisible: false,
-        devices: [],
-      },
-    };
-  }
-
-  streamDevice = (device?: IDevice) => {
-    if (device) {
-      this.setState({
-        streamingDevice: {
-          isVisible: true,
-          devices: [device],
-        },
-      });
-    } else {
-      this.setState({
-        streamingDevice: {
-          isVisible: false,
-          devices: [],
-        },
-      });
-    }
-  };
-
   render() {
     return (
       <>
@@ -47,17 +19,11 @@ export default class CardView extends React.Component<IProps, any> {
               <DeviceCard
                 device={device}
                 reloadDevices={this.props.reloadDevices}
-                streamDevice={this.streamDevice}
+                streamDevice={this.props.streamDevice}
               />
             ))
           )}
         </div>
-        {this.state.streamingDevice.isVisible && (
-          <DeviceStreamPopup
-            devices={this.state.streamingDevice.devices}
-            onClose={() => this.streamDevice()}
-          />
-        )}
       </>
     );
   }
