@@ -77,7 +77,7 @@ export default class DeviceExplorer extends React.Component<any, IDeviceExplorer
   };
 
   getBusyDevicesCount(devices: Array<IDevice>) {
-    const filters = [(d: IDevice) => d.busy];
+    const filters = [(d: IDevice) => d.busy && !d.userBlocked];
     return filters.reduce((devices: Array<IDevice>, predicate: (d: IDevice) => boolean) => {
       return devices.filter(predicate);
     }, devices).length;
@@ -247,9 +247,9 @@ export default class DeviceExplorer extends React.Component<any, IDeviceExplorer
             </div>
           </div>
           <div className="device-explorer-header-right-container">
-            <div>
-              <button onClick={this.toggleStream}>View All</button>
-            </div>
+            {this.state.activeSessionsCount !== 0 && (
+              <button onClick={this.toggleStream}>View Active Devices</button>
+            )}
             <div className="device-explorer-header-filter-count">
               <span>{this.state.activeSessionsCount}</span>
               Active session{this.state.activeSessionsCount > 1 ? 's' : ''}
@@ -263,7 +263,7 @@ export default class DeviceExplorer extends React.Component<any, IDeviceExplorer
         <CardView
           devices={devices}
           streamDevice={this.streamDevice}
-          reloadDevices={this.fetchDevices}
+          reloadDevices={() => this.fetchDevices()}
         />
         {this.state.isStreamingPopupVisible && (
           <DeviceStreamPopup

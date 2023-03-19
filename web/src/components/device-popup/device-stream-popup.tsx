@@ -37,13 +37,23 @@ function DeviceStreamPopup(props: IDeviceStreamPopupProps) {
       {activeDevice ? (
         <div className="device-stream-popup">
           <div className="device-stream-popup-header">
-            <div className="device-stream-popup-header__title">{activeDevice.name}</div>
-            <button onClick={() => setActiveDevice(undefined)}>View All</button>
-            <div className="device-stream-popup-header__close" onClick={onClose}>
-              &times;
+            <div className="device-stream-popup-header__title-container">
+              <div className="device-stream-popup-header__title">{activeDevice.name}</div>
+              <button
+                onClick={() => setActiveDevice(undefined)}
+                className="device-stream-popup-header__button"
+              >
+                View Active Devices
+              </button>
             </div>
+            <button className="device-stream-popup-header__close" onClick={onClose}>
+              &times;
+            </button>
           </div>
-          <iframe src={streamUrl(activeDevice)} className="device-stream-popup-content__embed" />
+          <iframe
+            src={streamUrl(activeDevice)}
+            className="device-stream-popup-content__embed__single"
+          />
         </div>
       ) : (
         <div className="device-stream-popup">
@@ -55,12 +65,21 @@ function DeviceStreamPopup(props: IDeviceStreamPopupProps) {
               &times;
             </div>
           </div>
-          {filterActiveSessionDevices(devices).map((device) => (
-            <div key={device.udid} onClick={() => setActiveDevice(device)}>
-              <p>{device.name}</p>
-              <iframe src={streamUrl(device)} className="device-stream-popup-content__embed" />
-            </div>
-          ))}
+          <div className="device-stream-popup-content__devices">
+            {filterActiveSessionDevices(devices).map((device) => (
+              <div
+                key={device.udid}
+                onClick={() => setActiveDevice(device)}
+                className="device-stream-popup-content__device"
+              >
+                <p className="device-stream-popup-content__devices__name">{device.name}</p>
+                <iframe
+                  src={streamUrl(device)}
+                  className="device-stream-popup-content__embed__multiple"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
