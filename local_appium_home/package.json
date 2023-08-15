@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "@appium/fake-driver": "5.1.5",
+    "appium-device-farm": "file:.."
+  }
+}

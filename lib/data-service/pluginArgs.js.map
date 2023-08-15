@@ -1,0 +1,1 @@
+{"version":3,"file":"pluginArgs.js","sourceRoot":"","sources":["../../src/data-service/pluginArgs.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,6BAA+B;AAE/B,SAAe,UAAU,CAAC,IAAS;;QACjC,YAAO,CAAC,MAAM,CAAC,IAAI,CAAC,CAAC;IACvB,CAAC;CAAA;AAMQ,gCAAU;AAJnB,SAAS,UAAU;IACjB,OAAO,YAAO,CAAC,KAAK,EAAE,CAAC,IAAI,EAAE,CAAC,IAAI,EAAE,CAAC;AACvC,CAAC;AAEoB,gCAAU"}
