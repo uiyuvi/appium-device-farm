@@ -1,7 +1,8 @@
 import { remote } from 'webdriverio';
+import { API_DEMOS_APK_PATH as apidemosApp } from 'android-apidemos';
 
 const APPIUM_HOST = '127.0.0.1';
-const APPIUM_PORT = 31337;
+const APPIUM_PORT = 4723;
 const WDIO_PARAMS = {
   connectionRetryCount: 0,
   hostname: APPIUM_HOST,
@@ -11,10 +12,10 @@ const WDIO_PARAMS = {
 };
 const capabilities = {
   platformName: 'Android',
-  'appium:uiautomator2ServerInstallTimeout': '50000',
-  'appium:automationName': 'UIAutomator2',
-  'appium:app':
-    'https://github.com/AppiumTestDistribution/appium-demo/blob/main/VodQA.apk?raw=true',
+  'appium:automationName': 'espresso',
+  'appium:app': apidemosApp,
+  'appium:forceEspressoRebuild': false,
+  'appium:showGradleLog': true
 };
 let driver;
 describe('Plugin Test', () => {
@@ -23,8 +24,8 @@ describe('Plugin Test', () => {
   });
 
   it('Vertical swipe test', async () => {
-    console.log(await driver.capabilities.deviceUDID);
-    await driver.$('~login').click();
+    const el = await driver.$(".//*[@text='Animation']");
+    await driver.executeScript('mobile:flashElement', [{ element: el.elementId}]);
   });
 
   afterEach(async () => await driver.deleteSession());
