@@ -20,6 +20,7 @@ export function addProxyHandler(sessionId: string, remoteHost: string) {
     logger.info(`Added proxy to createProxyMiddleware: ${JSON.stringify(proxyServer)}`);
     config.agent = new HttpsProxyAgent(proxyServer);
   }
+  logger.info(`config passed to createProxyMiddleware: ${JSON.stringify(config)}`);
   remoteProxyMap.set(
     sessionId,
     createProxyMiddleware(config)
