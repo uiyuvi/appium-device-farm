@@ -13,7 +13,7 @@
     "test-jest": "NODE_OPTIONS=--experimental-vm-modules npx jest ./test/unit/AndroidDeviceManager.spec.js",
     "test-parallel-android": "mocha --require ts-node/register -p ./test/e2e/android/conf.spec.js --exit --timeout 260000",
     "test-parallel-bs": "mocha --require ts-node/register -p ./test/e2e/android/cloud/bs.spec.ts --exit --timeout 260000",
-    "test-parallel-pcloudy": "mocha --require ts-node/register -p ./test/e2e/android/cloud/pcloudy.spec.ts --exit --timeout 260000",
+    "test-parallel-pcloudy": "CLOUD_USERNAME=username CLOUD_KEY=key mocha --require ts-node/register -p ./test/e2e/android/cloud/pcloudy.spec.ts --exit --timeout 260000",
     "test-parallel-sauce": "wait-on http://localhost:31337/device-farm/ && mocha --require ts-node/register -p ./test/e2e/android/cloud/sauce.spec.js --exit --timeout 260000",
     "test-parallel-lt": "mocha --require ts-node/register -p ./test/e2e/android/cloud/lambdaTest.spec.ts --exit --timeout 260000",
     "test-parallel-ios-bs": "mocha --require ts-node/register -p ./test/e2e/android/cloud/confIOS.ts --exit --timeout 260000",

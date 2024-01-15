@@ -14,6 +14,8 @@ export default class CapabilityManager {
     entries.map(([key, val]) => {
       this.capabilities.alwaysMatch[`appium:${key}`] = val;
     });
+    console.log('is pCLOUDY: ', this.freeDevice.cloud.toLowerCase() === Cloud.PCLOUDY);
+    console.log('is pCLOUDY: ', process.env.CLOUD_KEY);
     if (this.freeDevice.cloud.toLowerCase() === Cloud.PCLOUDY) {
       this.capabilities.alwaysMatch['appium:pCloudy_ApiKey'] = process.env.CLOUD_KEY;
       this.capabilities.alwaysMatch['appium:pCloudy_Username'] = process.env.CLOUD_USERNAME;

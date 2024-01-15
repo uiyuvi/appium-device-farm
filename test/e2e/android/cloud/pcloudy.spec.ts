@@ -25,8 +25,11 @@ const capabilities = {
   pCloudy_EnablePerformanceData: 'true',
   pCloudy_EnableDeviceLogs: 'true',
   pCloudy_ApplicationName: 'pCloudy_Appium_Demo.apk',
+  app: 'pCloudy_Appium_Demo.apk',
   appPackage: 'com.pcloudy.appiumdemo',
   appActivity: 'com.ba.mobile.LaunchActivity',
+  appiumVersion: '2.0.0',
+  platformVersion: '13.0',
 };
 let driver: any;
 describe('Plugin Test', () => {
